@@ -14,29 +14,25 @@ args = parser.parse_args()
 
 
 lines = [
-    f"Clean data path: {args.clean_data}",
+    f"Clean data file: {args.clean_data}",
     f"Transformed data output path: {args.transformed_data}",
 ]
 
-for line in lines:
-    print(line)
+# Fix path
+clean_data = Path(args.clean_data)
 
-print("mounted_path files: ")
-arr = os.listdir(args.clean_data)
-print(arr)
+print("Files in `clean_data` path:", [(x, x.is_dir()) for x in clean_data.iterdir()])
+print("Files in `clean_data.parent` path:", [(x, x.is_dir()) for x in clean_data.parent.iterdir()])
 
-df_list = []
-for filename in arr:
-    print("reading file: %s ..." % filename)
-    with open(os.path.join(args.clean_data, filename), "r") as handle:
-        # print (handle.read())
-        # ('input_df_%s' % filename) = pd.read_csv((Path(args.training_data) / filename))
-        input_df = pd.read_csv((Path(args.clean_data) / filename))
-        df_list.append(input_df)
+if clean_data.is_dir():
+    # clean_data = clean_data / clean_data.name
+    clean_data = clean_data / "file"
+print("reading file: %s ..." % clean_data)
+input_df = pd.read_csv(Path(clean_data))
 
 
 # Transform the data
-combined_df = df_list[1]
+combined_df = input_df
 # These functions filter out coordinates for locations that are outside the city border.
 
 # Filter out coordinates for locations that are outside the city border.

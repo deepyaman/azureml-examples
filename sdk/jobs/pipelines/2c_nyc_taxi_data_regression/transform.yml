@@ -6,7 +6,7 @@ version: 1
 type: command
 inputs:
   clean_data: 
-    type: uri_folder 
+    type: uri_folder
 outputs:
   transformed_data:
     type: uri_folder

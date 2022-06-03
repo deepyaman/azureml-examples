@@ -16,19 +16,19 @@ from mldesigner import command_component, Input, Output
 )
 def prepare_data_component(
     input_data: Input(type="uri_folder"),
-    training_data: Output(type="uri_folder"),
-    test_data: Output(type="uri_folder"),
+    training_data: Output(type="uri_file"),
+    test_data: Output(type="uri_file"),
 ):
     convert(
         os.path.join(input_data, "train-images-idx3-ubyte"),
         os.path.join(input_data, "train-labels-idx1-ubyte"),
-        os.path.join(training_data, "mnist_train.csv"),
+        training_data,
         60000,
     )
     convert(
         os.path.join(input_data, "t10k-images-idx3-ubyte"),
         os.path.join(input_data, "t10k-labels-idx1-ubyte"),
-        os.path.join(test_data, "mnist_test.csv"),
+        test_data,
         10000,
     )
 
